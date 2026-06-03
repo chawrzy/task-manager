@@ -1,20 +1,26 @@
 import json
+from datetime import datetime, timedelta
+
+
 class TaskManager:
     def __init__(self):
         self.tasks = []
         self.next_id = 1
         self.load_tasks()
 
-    def add_task(self, title):
+    def add_task(self, title , start_time , duration):
         task = {
             "id": self.next_id,
             "title": title,
-            "done": False
+            "done": False,
+            "start_time": start_time,
+            "duration": duration,
+            "status": "pending"
         }
         self.tasks.append(task)
         self.next_id += 1
         self.save_tasks()
-     
+
     def checking_exist_task(self, id):
         for task in self.tasks:
             if task["id"] == id:
@@ -24,38 +30,36 @@ class TaskManager:
     def remove_task(self, id):
         self.tasks = [t for t in self.tasks if t["id"] != id]
         self.save_tasks()
-    
-    def mark_done(self , id):
+
+    def mark_done(self, id):
         for task in self.tasks:
             if task["id"] == id:
                 task["done"] = True
         self.save_tasks()
-    
-    def edit_task(self , id , title = None):
+
+    def edit_task(self, id, title=None):
         if title:
             for task in self.tasks:
-                if task['id'] == id:
-                    task['title'] = title
+                if task["id"] == id:
+                    task["title"] = title
                     print("The title has been change!")
                     break
         else:
             for task in self.tasks:
-                if task['id'] == id:
-                    task['done'] = not task['done']
+                if task["id"] == id:
+                    task["done"] = not task["done"]
                     print("The task status has been changed!")
                     break
         self.save_tasks()
 
-    def show_task(self , id):
+    def show_task(self, id):
         for task in self.tasks:
-            if task['id'] == id:
+            if task["id"] == id:
                 check = "✅" if task["done"] else "❌"
                 print(f"{task['id']} - {task['title']} - {check}")
 
     def show_all_tasks(self):
-        for task in self.tasks:
-            check = "✅" if task["done"] else "❌"
-            print(f"{task['id']} - {task['title']} - {check}")
+        return self.tasks
 
     def filter_task(self):
         print("\n❌ Not Done:")
@@ -80,5 +84,4 @@ class TaskManager:
                     self.next_id = max(t["id"] for t in self.tasks) + 1
         except FileNotFoundError:
             self.tasks = []
-
-
+            
