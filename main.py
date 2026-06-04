@@ -1,5 +1,7 @@
 from classes import TaskManager
 from datetime import datetime
+from datetime import datetime, timedelta
+
 tm = TaskManager()
 
 print("--- wellcome to task manager ----")
@@ -18,6 +20,7 @@ while True:
 
         case 1:
             title = input("Enter the title of your task: ")
+            about = input("about task: ")
             while True:
                 try:
                     dateTask = input("Date (YYYY-MM-DD): ")
@@ -28,7 +31,7 @@ while True:
                 except ValueError:
                     print("Wrong format, try again!")
             durationTask = int(input("Enter the duration of the task: (min) "))
-            tm.add_task(title , date_time_task , durationTask)
+            tm.add_task(title, about, date_time_task , durationTask)
         
         case 2:
             task_id = int(input("Enter the Id of the task: "))
@@ -68,7 +71,12 @@ while True:
             tasks = tm.show_all_tasks()
             for task in tasks:
                 check = "✅" if task["done"] else "❌"
-                print(f"{task['id']} - {task['title']} - {check}")
+                start = datetime.strptime(task["start_time"], "%Y-%m-%d %H:%M")
+                end = start + timedelta(minutes=task["duration"])
+                print("------------------------------")
+                print(f"{task['id']} - {task['title']} - {check} - {task['start_time']} - {end}")
+                print(task['about'])
+                print("------------------------------")
 
         case 7:
             tm.task_save()
