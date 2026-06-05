@@ -24,6 +24,7 @@ def scheduler():
                 if not task.get("finished") and now >= end:
                     send_message(f"✅ END: {task['title']}")
                     task["finished"] = True
+                    task['done'] = "✅"
 
             except Exception as e:
                 print("Error in task:", task, e)
