@@ -14,17 +14,19 @@ def scheduler():
 
             try:
                 start = datetime.strptime(task["start_time"], "%Y-%m-%d %H:%M")
-
+                end = start + timedelta(minutes=task["duration"])
                 if not task.get("started") and now >= start:
-                    send_message(f"🚀 Task Started: {task['title']}")
+                    
+                    messge = f" ---- TASK STARTED ----\n🚀 Task name : {task['title']}\n⏰ Time: {task['start_time'].split(" ")[-1]}\n ⏳ duration : {task['duration']} min"
+                    send_message(messge)
                     task["started"] = True
 
-                end = start + timedelta(minutes=task["duration"])
 
                 if not task.get("finished") and now >= end:
-                    send_message(f"✅ END: {task['title']}")
+                    messge = " ---- TASK ENDED ---- "
+                    send_message(messge)
                     task["finished"] = True
-                    task['done'] = "✅"
+                    task['done'] = True
 
             except Exception as e:
                 print("Error in task:", task, e)
