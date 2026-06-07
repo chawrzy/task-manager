@@ -1,37 +1,62 @@
-# 🧠 Task Manager (Python CLI)
+# 🧠 Task Manager (Python CLI + Telegram Bot)
 
-A simple but powerful command-line Task Manager built with Python.  
-This project helps you manage your daily tasks with features like add, edit, delete, filter, and save using JSON.
+A powerful command-line Task Manager built with Python, featuring task scheduling, persistence with JSON, and Telegram notifications.
+
+This project is designed as a real-world productivity tool with OOP structure and automation features.
 
 ---
 
 ## 🚀 Features
 
-- ➕ Add new tasks
-- ❌ Remove tasks
-- ✏️ Edit task title
-- 🔄 Toggle task status (done / not done)
-- 🔍 Search / view tasks
+### 📋 Task Management
+- ➕ Add tasks with title, description, date & time  
+- ❌ Remove tasks by ID  
+- ✏️ Edit task title or toggle status  
+- 🔍 View single task details  
+- 📑 View all tasks  
 - 📂 Filter tasks (done / not done)
-- 💾 Auto save to JSON file
-- 📥 Load tasks automatically on startup
+
+### 💾 Data Persistence
+- Auto-save tasks to `tasks.json`  
+- Auto-load tasks on startup  
+- Stable ID system for tasks  
+
+### ⏰ Scheduler System
+- Background task scheduler  
+- Start and end time tracking  
+- Automatic notifications when:
+  - Task starts  
+  - Task ends  
+- Daily report at fixed time (15:00)
+
+### 📲 Telegram Integration
+- Sends task notifications via Telegram Bot API  
+- Daily summary messages  
+- Start/finish alerts  
 
 ---
 
-## 🛠️ Technologies
+## 🛠️ Tech Stack
 
-- Python 3
-- JSON (for data storage)
-- Object-Oriented Programming (OOP)
+- Python 3  
+- Object-Oriented Programming (OOP)  
+- JSON file storage  
+- `datetime` module  
+- `requests` (Telegram API)  
+- Background scheduler loop  
 
 ---
 
-## 📂 Project Structure
-- main.py # CLI menu and user interaction
-- classes.py # TaskManager class (logic)
-- tasks.json # Stored tasks (auto-generated)
-- README.md # Project documentation
+## 📁 Project Structure
 
+task-manager/  
+│  
+├── main.py          # CLI interface (user menu)  
+├── classes.py       # TaskManager logic (OOP core)  
+├── scheduler.py     # Background task notifier  
+├── notifier.py      # Telegram message sender  
+├── tasks.json       # Stored tasks (auto-generated)  
+└── README.md  
 
 ---
 
@@ -39,61 +64,85 @@ This project helps you manage your daily tasks with features like add, edit, del
 
 ### 1. Clone the repository
 
-```bash
 git clone https://github.com/chawrzy/task-manager.git
-```
 
-### 2. Go to project folder
+### 2. Enter project directory
 
-```bash
 cd task-manager
-```
 
-### 3. Run the program
+### 3. Install dependencies
 
-```bash
+pip install requests
+
+### 4. Run the CLI app
+
 python main.py
-```
+
+### 5. (Optional) Run scheduler
+
+python scheduler.py
+
+---
+
+## ⚙️ Telegram Setup
+
+1. Create a bot using @BotFather  
+2. Get your BOT TOKEN  
+3. Get your CHAT ID  
+4. Put them inside `notifier.py`:
+
+TOKEN = \"YOUR_BOT_TOKEN\"  
+CHAT_ID = \"YOUR_CHAT_ID\"
 
 ---
 
 ## 💡 Example Menu
 
-```text
 --- welcome to task manager ---
 
-[1] add a new task  
-[2] remove a task  
-[3] edit task  
-[4] search task  
-[5] filter tasks  
-[6] show all tasks  
-[7] save tasks  
-[8] exit
-```
+[1] Add task  
+[2] Remove task  
+[3] Edit task  
+[4] Show task  
+[5] Filter tasks  
+[6] Show all tasks  
+[7] Save tasks  
+[8] Exit  
+
+---
+
+## 🧠 Key Design Ideas
+
+- Separation of CLI and business logic  
+- Persistent data with JSON  
+- Scheduler loop for automation  
+- Real-time notifications via Telegram  
+- Clean OOP structure  
 
 ---
 
 ## 📌 Future Improvements
 
-- Add GUI (Tkinter or PyQt)  
-- Add task priority system  
-- Add due dates  
-- Add search by keyword  
-- Add sorting (date / status)  
-- Convert to web app using FastAPI  
+- 🌐 Web version (FastAPI / Django)  
+- 🖥 GUI (Tkinter / PyQt / React frontend)  
+- 🔍 Search by keyword  
+- 🏷 Task priority system  
+- 📅 Calendar view  
+- 🔔 Desktop notifications  
+- ☁️ Cloud database (PostgreSQL / Firebase)  
 
 ---
 
 ## 👨‍💻 Author
 
-Made by Hesam ✨  
-Python learner building real-world projects for portfolio.
+Made by **Hesam** ✨  
+Python developer building real-world projects for portfolio & job readiness  
 
 ---
 
 ## ⭐ Support
 
-If you like this project, give it a ⭐ on GitHub!
-
----
+If you like this project:
+- Give it a ⭐ on GitHub  
+- Fork it  
+- Improve it 🚀  

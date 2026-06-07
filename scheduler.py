@@ -24,7 +24,7 @@ def scheduler():
 
         # Daily report
         today = now.strftime("%Y-%m-%d")
-        if now.strftime("%H:%M") == "08:00" and last_report_date != today:
+        if now.strftime("%H:%M") == "15:00" and last_report_date != today:
             message = "---- TODAY TASKS ----\n\n"
 
             for task in today_tasks:

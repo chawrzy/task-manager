@@ -8,41 +8,30 @@ class TaskManager:
         self.next_id = 1
         self.load_tasks()
 
-    def add_task(self, title, about,start_time, duration):
-
-        if start_time is None or duration is None:
+    def add_task(self, title, about, start_time, duration):
+        if not start_time or not duration:
             print("❌ Invalid task data")
             return
 
         task = {
             "id": self.next_id,
             "title": title,
-            "about": about ,
+            "about": about,
             "done": False,
             "start_time": start_time,
             "duration": duration,
-            "status": "pending"
         }
 
         self.tasks.append(task)
         self.next_id += 1
-        self.task_save()
+        self.save_tasks()
 
     def checking_exist_task(self, id):
-        for task in self.tasks:
-            if task["id"] == id:
-                return True
-        return False
+        return any(task["id"] == id for task in self.tasks)
 
     def remove_task(self, id):
         self.tasks = [t for t in self.tasks if t["id"] != id]
-        self.task_save()
-
-    def mark_done(self, id):
-        for task in self.tasks:
-            if task["id"] == id:
-                task["done"] = True
-        self.task_save()
+        self.save_tasks()
 
     def edit_task(self, id, title=None):
         for task in self.tasks:
@@ -50,25 +39,20 @@ class TaskManager:
 
                 if title:
                     task["title"] = title
-                    print("The title has been change!")
+                    print("✅ Title updated")
                 else:
                     task["done"] = not task["done"]
-                    print("The task status has been changed!")
+                    print("✅ Status toggled")
 
-                break
-
-        self.task_save()
+                self.save_tasks()
+                return
 
     def show_task(self, id):
         for task in self.tasks:
             if task["id"] == id:
-                check = "✅" if task["done"] else "❌"
-                start = datetime.strptime(task["start_time"], "%Y-%m-%d %H:%M")
-                end = start + timedelta(minutes=task["duration"])
-                print("------------------------------")
-                print(f"{task['id']} - {task['title']} - {check} - {task['start_time']} - {end}")
-                print(task['about'])
-                print("------------------------------")
+                self.print_task(task)
+                return True
+        return False
 
     def show_all_tasks(self):
         return self.tasks
@@ -84,7 +68,22 @@ class TaskManager:
             if task["done"]:
                 print(f"{task['id']} - {task['title']}")
 
-    def task_save(self):
+    def print_task(self, task):
+        check = "✅" if task["done"] else "❌"
+
+        start = datetime.strptime(task["start_time"], "%Y-%m-%d %H:%M")
+        end = start + timedelta(minutes=task["duration"])
+
+        print("-" * 30)
+        print(
+            f"{task['id']} | {task['title']} | {check}"
+        )
+        print(f"Start: {task['start_time']}")
+        print(f"End: {end}")
+        print(f"About: {task['about']}")
+        print("-" * 30)
+
+    def save_tasks(self):
         with open("tasks.json", "w", encoding="utf-8") as f:
             json.dump(self.tasks, f, indent=4, ensure_ascii=False)
 
